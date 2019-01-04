@@ -58,9 +58,9 @@ class Window(QtWidgets.QWidget):
     def handleButton2(self):
         print ('buton 2 clicked')
     def handleButton3(self):
-	    print ('buton 1 clicked')
+	    print ('buton 3 clicked')
     def handleButton4(self):
-	    print ('buton 2 clicked')
+	    print ('buton 4 clicked')
 
 if __name__ == '__main__':
 
