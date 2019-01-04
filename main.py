@@ -2,7 +2,9 @@
 
 #imports
 import sys, scheduler, fileManager, operator
+from time import gmtime, strftime
 
+#SOLO PARA TESTING INICIAL
 mainMenu = "******************** MENU ********************\n 1. New Schedule.\n 2. Edit tasks.\n 3. Give me a task.\n 4. Manage tasks.\n 5. Load existing Schedule.\n 6. Exit"
 editTaskMenu = "****************** EDIT TASK ******************\n 1. Add new task.\n 2. Remove existing task.\n 3. View task info.\n 4. Return to Menu."
 manageTaskMenu = "***************** MANAGE TASK *****************\n 1. Give me a task.\n 2. Postpone a task.\n 3. Return to Menu."
@@ -24,20 +26,14 @@ def mainMenuRedirectTo(option):
     elif option == 4:
         #shows menu to postpone a task
         postponeTask()
-    elif option == 5:
-        #shows menu to load an existing schedule
-        loadSchedule()
-        #TODO: THREAD QUE CADA HORA RECALCULE TAREA
-    elif option == 6:
-        #closes the program
-        print("thanks for using Schedule!")
-        sys.exit()
-    else:
-        print(wrongOp)
 
 #Schedule functions
 def createSchedule():
-    print("Name your schedule:")
+    #TODO: Safe in a logFile
+    print(strftime("%Y-%m-%d %H:%M:%S", gmtime()) + " - createSchedule() in")
+
+    #REDIRECT TO NEW WINDOW (introduce schedule name)
+
 def modifSchedule():
     print("Wich one do you want to edit?")
     #TODO: PRINT SCHEDULE FILE LIST TO CHOOSE.

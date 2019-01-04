@@ -1,19 +1,24 @@
-import sys, style
+import sys, style,main
 from PyQt5 import QtWidgets, QtGui, QtCore
 
 class Window(QtWidgets.QWidget):
     def __init__(self):
         super(Window, self).__init__()
+        self.setFixedSize(240, 320)
         self.initUI()
 
     def initUI(self):
 
-        #Buttons declaration
-        button1 = QtWidgets.QPushButton('BUTTON 1', self)
-        button2 = QtWidgets.QPushButton('BUTTON 2', self)
-        button3 = QtWidgets.QPushButton('BUTTON 3', self)
-        button4 = QtWidgets.QPushButton('BUTTON 4', self)
+        #Label declaration
+        labelTitle = QtWidgets.QLabel('SCHEDULER',self)
 
+        #Buttons declaration
+        button1 = QtWidgets.QPushButton('New Schedule', self)
+        button2 = QtWidgets.QPushButton('Task Manager', self)
+        button3 = QtWidgets.QPushButton('Send new Task', self)
+        button4 = QtWidgets.QPushButton('Load Schedule', self)
+
+        #setting on click handlers
         button1.clicked.connect(self.handleButton1)
         button2.clicked.connect(self.handleButton2)
         button3.clicked.connect(self.handleButton3)
@@ -22,6 +27,12 @@ class Window(QtWidgets.QWidget):
         #creates a layout horizontally centered
         vBox = QtWidgets.QVBoxLayout()
         #creates an element that adds space to the top
+        vBox.addStretch(1)
+
+        #adds the titleLabel
+        vBox.addWidget(labelTitle)
+
+        #add space between the title and the buttons
         vBox.addStretch(1)
 
         #adds the buttons to the layout
@@ -45,22 +56,31 @@ class Window(QtWidgets.QWidget):
         #sets the vBox as the main layout
         self.setLayout(hBox)
 
-        #set img as background
-        self.setStyleSheet(style.stylesheet)
+        #setting styles
 
-		#gives an initial size and position to the window
-        self.setGeometry(300,300,200,250)
+        #title alignment Centered
+        labelTitle.setAlignment(QtCore.Qt.AlignCenter)
+
+        button1.setStyleSheet(style.stylesheetQPushButton)
+        button2.setStyleSheet(style.stylesheetQPushButton)
+        button3.setStyleSheet(style.stylesheetQPushButton)
+        button4.setStyleSheet(style.stylesheetQPushButton)
+
+        self.setObjectName("mainWindow")
+        self.setStyleSheet(style.stylesheetQWidget)
+
         #sets the window title
-        self.setWindowTitle("Testing PyQt GUI")
+        self.setWindowTitle("Scheduler")
 
     def handleButton1(self):
-        print ('buton 1 clicked')
+        main.mainMenuRedirectTo(1)
     def handleButton2(self):
-        print ('buton 2 clicked')
+        main.mainMenuRedirectTo(2)
     def handleButton3(self):
-	    print ('buton 3 clicked')
+        main.mainMenuRedirectTo(3)
     def handleButton4(self):
-	    print ('buton 4 clicked')
+        main.mainMenuRedirectTo(4)
+
 
 if __name__ == '__main__':
 
