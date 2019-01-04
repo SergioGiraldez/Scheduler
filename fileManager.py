@@ -1,7 +1,7 @@
 # SCHEDULER by Sergi Giraldez
 
 #imports
-import time, os, scheduler #TODO: Change scheduler.py name
+import time, os, classContainer
 from datetime import datetime
 
 
@@ -29,13 +29,13 @@ def readScheduleFile(fileName = "tasks.txt"):
 				for x in f:
 					taskParams = x.split("/")
 			 		#param1: name param2: dificulty param3: date
-					task = scheduler.Task(taskParams[0],taskParams[1],taskParams[2])
+					task = classContainer.Task(taskParams[0],taskParams[1],taskParams[2])
 					myTasks.append(task)
 					totalDificulty += int(task.dificulty)
 					if task.getDateInSeconds() < firstDate:
 						firstDate = task.getDateInSeconds()
 
-				return scheduler.Info(availableHours, myTasks, firstDate, totalDificulty)
+				return classContainer.Info(availableHours, myTasks, firstDate, totalDificulty)
 
 			finally:
 				f.close()

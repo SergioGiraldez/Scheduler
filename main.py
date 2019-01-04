@@ -1,82 +1,92 @@
-# SCHEDULER by Sergi Giraldez
+import sys, style, menuManager
+from PyQt5 import QtWidgets, QtGui, QtCore
 
-#imports
-import sys, scheduler, fileManager, operator
-from time import gmtime, strftime
+class Window(QtWidgets.QWidget):
+    def __init__(self):
+        super(Window, self).__init__()
+        self.setFixedSize(240, 320)
+        self.initUI()
 
-#SOLO PARA TESTING INICIAL
-mainMenu = "******************** MENU ********************\n 1. New Schedule.\n 2. Edit tasks.\n 3. Give me a task.\n 4. Manage tasks.\n 5. Load existing Schedule.\n 6. Exit"
-editTaskMenu = "****************** EDIT TASK ******************\n 1. Add new task.\n 2. Remove existing task.\n 3. View task info.\n 4. Return to Menu."
-manageTaskMenu = "***************** MANAGE TASK *****************\n 1. Give me a task.\n 2. Postpone a task.\n 3. Return to Menu."
-wrongOp = "Wrong option, select again."
+    def initUI(self):
 
-def showMenu():
-    print(mainMenu)
+        #Label declaration
+        labelTitle = QtWidgets.QLabel('SCHEDULER',self)
 
-def mainMenuRedirectTo(option):
-    if option == 1:
-        #crete schedule
-        createSchedule()
-    elif option == 2:
-        #shows menu to edit schedule
-        modifSchedule()
-    elif option == 3:
-        #recalc next task
-        calcNextTask()
-    elif option == 4:
-        #shows menu to postpone a task
-        postponeTask()
+        #Buttons declaration
+        button1 = QtWidgets.QPushButton('New Schedule', self)
+        button2 = QtWidgets.QPushButton('Task Manager', self)
+        button3 = QtWidgets.QPushButton('Send new Task', self)
+        button4 = QtWidgets.QPushButton('Load Schedule', self)
 
-#Schedule functions
-def createSchedule():
-    #TODO: Safe in a logFile
-    print(strftime("%Y-%m-%d %H:%M:%S", gmtime()) + " - createSchedule() in")
+        #setting on click handlers
+        button1.clicked.connect(self.handleButton1)
+        button2.clicked.connect(self.handleButton2)
+        button3.clicked.connect(self.handleButton3)
+        button4.clicked.connect(self.handleButton4)
 
-    #REDIRECT TO NEW WINDOW (introduce schedule name)
+        #creates a layout horizontally centered
+        vBox = QtWidgets.QVBoxLayout()
+        #creates an element that adds space to the top
+        vBox.addStretch(1)
 
-def modifSchedule():
-    print("Wich one do you want to edit?")
-    #TODO: PRINT SCHEDULE FILE LIST TO CHOOSE.
-    #TODO: OPTION TO MODIF TASKS
-def modifTasks():
-    print("Wich task do you want to edit?")
-    #TODO: PRINT TASK LIST TO CHOOSE.
-def loadSchedule():
-    print("Wich one do you want to load?")
-    fileNames = fileManager.showFileList()
-    print("Write the number acording to the file:")
-    nameIndex = int(input()) - 1
-    info = fileManager.readScheduleFile(fileNames[nameIndex])
-    if info == None:
-        print("Something went wrong. (MAIN)")
-    else:
-        #TODO: HACER ESTO EN OTRA FUNCION
-        for i in info.tasks:
-            print(i.name)
-            i.calcPriority(info.availableHours,info.totalDificulty,info.firstDate)
+        #adds the titleLabel
+        vBox.addWidget(labelTitle)
 
-        info.tasks.sort(key= operator.attrgetter("priority"),reverse=False)
-        for i in info.tasks:
-            print(i.name)
+        #add space between the title and the buttons
+        vBox.addStretch(1)
 
-def calcNextTask():
-    print("Calculating next task to do ...")
-    #TODO: MAKE THE MATHS
-def postponeTask():
-    print("Select a the task you want to postpone: ")
-    #TODO: PRINT A LIST OF THE TASKS
+        #adds the buttons to the layout
+        vBox.addWidget(button1)
+        vBox.addWidget(button2)
+        vBox.addWidget(button3)
+        vBox.addWidget(button4)
+
+        #creates an element that adds space to the bottom
+        vBox.addStretch(1)
+
+        #creates a layout vertically centered
+        hBox=QtWidgets.QHBoxLayout()
+        #creates an element that adds space to the left
+        hBox.addStretch(1)
+        #adds the layout with the buttons
+        hBox.addLayout(vBox)
+        #creates an element that adds space to the right
+        hBox.addStretch(1)
+
+        #sets the vBox as the main layout
+        self.setLayout(hBox)
+
+        #setting styles
+
+        #title alignment Centered
+        labelTitle.setAlignment(QtCore.Qt.AlignCenter)
+
+        button1.setStyleSheet(style.stylesheetQPushButton)
+        button2.setStyleSheet(style.stylesheetQPushButton)
+        button3.setStyleSheet(style.stylesheetQPushButton)
+        button4.setStyleSheet(style.stylesheetQPushButton)
+
+        self.setObjectName("mainWindow")
+        self.setStyleSheet(style.stylesheetQWidget)
+
+        #sets the window title
+        self.setWindowTitle("Scheduler")
+
+    def handleButton1(self):
+        menuManager.mainMenuRedirectTo(1)
+    def handleButton2(self):
+        menuManager.mainMenuRedirectTo(2)
+    def handleButton3(self):
+        menuManager.mainMenuRedirectTo(3)
+    def handleButton4(self):
+        menuManager.mainMenuRedirectTo(4)
 
 
-#Element showing functions
-
-# Program start function
-def main():
-    end = 0
-    while end == 0:
-        showMenu()
-        option = int(input())
-        mainMenuRedirectTo(option)
-
-#FIXME: FER README
 if __name__ == '__main__':
-    main()
+
+	app = QtWidgets.QApplication(sys.argv)
+	window = Window()
+	#allows the widget to use stylesheets
+	window.setAttribute(QtCore.Qt.WA_StyledBackground)
+	window.show()
+	sys.exit(app.exec_())
