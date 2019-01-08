@@ -1,9 +1,91 @@
 import sys, style, menuManager
 from PyQt5 import QtWidgets, QtGui, QtCore
 
-class Window(QtWidgets.QWidget):
+class LoginWindow(QtWidgets.QWidget):
+
+    switch_window = QtCore.pyqtSignal()
+
     def __init__(self):
-        super(Window, self).__init__()
+        QtWidgets.QWidget.__init__(self)
+        self.setWindowTitle("Login")
+        self.setFixedSize(380, 270)
+        self.initUI()
+
+    def initUI(self):
+
+        #Label declaration
+        font = QtGui.QFont("Arial",18,QtGui.QFont.Bold)
+        labelTitle = QtWidgets.QLabel('SCHEDULER',self)
+        labelTitle.setFont(font)
+
+        #Edit text declaration
+        eTxtUser= QtWidgets.QLineEdit()
+        eTxtPass= QtWidgets.QLineEdit()
+        eTxtPass.setEchoMode(QtWidgets.QLineEdit.Password)
+
+        #setting placeholders
+        eTxtUser.setPlaceholderText("YourUser")
+        eTxtPass.setPlaceholderText("********")
+
+        #Buttons declaration
+        button1 = QtWidgets.QPushButton('Login', self)
+
+        #setting on click handlers
+        button1.clicked.connect(self.handleButton1)
+
+        #creates a layout horizontally centered
+        vBox = QtWidgets.QVBoxLayout()
+        #creates an element that adds space to the top
+        vBox.addStretch(1)
+
+        #adds the titleLabel
+        vBox.addWidget(labelTitle)
+
+        #add space between the title and the buttons
+        vBox.addStretch(1)
+
+        #adds the text input & buttons to the layout
+        vBox.addWidget(eTxtUser)
+        vBox.addWidget(eTxtPass)
+        vBox.addWidget(button1)
+
+        #creates an element that adds space to the bottom
+        vBox.addStretch(2)
+
+        #creates a layout vertically centered
+        hBox=QtWidgets.QHBoxLayout()
+        #creates an element that adds space to the left
+        hBox.addStretch(1)
+        #adds the layout with the buttons
+        hBox.addLayout(vBox)
+        #creates an element that adds space to the right
+        hBox.addStretch(1)
+
+        #sets the vBox as the main layout
+        self.setLayout(hBox)
+
+        #setting styles
+
+        #title alignment Centered
+        labelTitle.setAlignment(QtCore.Qt.AlignCenter)
+
+        button1.setStyleSheet(style.stylesheetQPushButton)
+
+        self.setObjectName("logginWindow")
+        self.setStyleSheet(style.stylesheetQWidget)
+
+        #sets the window title
+        self.setWindowTitle("Scheduler")
+
+    def handleButton1(self):
+
+        self.switch_window.emit() # se pueden añadir parametros a pasar
+
+
+class MainWindow(QtWidgets.QWidget):
+    def __init__(self):
+        QtWidgets.QWidget.__init__(self)
+        self.setWindowTitle("TITLE")
         self.setFixedSize(240, 320)
         self.initUI()
 
@@ -81,12 +163,29 @@ class Window(QtWidgets.QWidget):
     def handleButton4(self):
         menuManager.mainMenuRedirectTo(4)
 
+class Controller:
+
+    def __init__(self):
+        pass
+
+    def show_login(self):
+        self.loginWindow = LoginWindow()
+        self.loginWindow.setAttribute(QtCore.Qt.WA_StyledBackground)
+        self.loginWindow.switch_window.connect(self.show_main)
+        self.loginWindow.show()
+
+    def show_main(self):
+        self.mainWindow = MainWindow()
+        self.loginWindow.close()
+        self.mainWindow.show()
+
+
+def main():
+    app = QtWidgets.QApplication(sys.argv)
+    controller = Controller()
+    controller.show_login()
+    sys.exit(app.exec_())
+
 
 if __name__ == '__main__':
-
-	app = QtWidgets.QApplication(sys.argv)
-	window = Window()
-	#allows the widget to use stylesheets
-	window.setAttribute(QtCore.Qt.WA_StyledBackground)
-	window.show()
-	sys.exit(app.exec_())
+    main()

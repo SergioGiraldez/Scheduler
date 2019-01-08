@@ -10,6 +10,9 @@ QPushButton {
     border-radius: 3px;
     background: #f5f5f5;
 }
+QPushButton:hover {
+     background-color: #aeaeae;
+ }
 """
 #para poner imagen de fondo
 #border-image: url(test1.jpg) 0 0 0 0 stretch stretch;

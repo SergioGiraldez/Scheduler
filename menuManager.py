@@ -1,17 +1,17 @@
 # SCHEDULER by Sergi Giraldez
 
 #imports
-import sys, scheduler, fileManager, operator
+import sys, classContainer, fileManager, operator
 from time import gmtime, strftime
 
-"""                                 STRUCTURES
-MENU                    TASK MANAGER    |       MENU                        EDIT SCHEDULE
-New Schedule            Add new Task    |       New Schedule                (Fields: Available Hours
-Task Manager            Delete Task     |       (Subscreen the Schedules             List of tasks
-Send new Task           View Task Info  |       listed.Remove, edit & run            (remove, postpone
-Load Schedule           Back            |       Schedule options inside)             edit inside)
-                                                (SEND NEW TASK)?            Add Task
-                                                                            Back / Safe
+"""  STRUCTURE
+LOGIN                   MENU                                SCHEDULE
+user field              New Schedule                        (Fields: Available Hours
+pass field              (Subscreen the Schedules                List of tasks
+Login                   listed.Remove, edit & run               (remove, postpone
+                        Schedule options inside)                edit inside)
+                        (SEND NEW TASK)?                    Add Task
+register                Logout                              Back / Safe
 """
 
 
