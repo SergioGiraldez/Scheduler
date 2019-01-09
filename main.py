@@ -91,14 +91,11 @@ class MainWindow(QtWidgets.QWidget):
 
     def initUI(self):
 
-        #Label declaration
-        labelTitle = QtWidgets.QLabel('SCHEDULER',self)
-
         #Buttons declaration
-        button1 = QtWidgets.QPushButton('New Schedule', self)
-        button2 = QtWidgets.QPushButton('Task Manager', self)
-        button3 = QtWidgets.QPushButton('Send new Task', self)
-        button4 = QtWidgets.QPushButton('Load Schedule', self)
+        button1 = QtWidgets.QPushButton(QtGui.QIcon("add.svg"), 'New Category', self)
+        button2 = QtWidgets.QPushButton(QtGui.QIcon("file.png"), 'Manager', self)
+        button3 = QtWidgets.QPushButton(QtGui.QIcon("addTask.png"), 'New Task', self)
+        button4 = QtWidgets.QPushButton(QtGui.QIcon("user.png"), 'User Settings', self)
 
         #setting on click handlers
         button1.clicked.connect(self.handleButton1)
@@ -107,31 +104,30 @@ class MainWindow(QtWidgets.QWidget):
         button4.clicked.connect(self.handleButton4)
 
         #creates a layout horizontally centered
-        vBox = QtWidgets.QVBoxLayout()
+        vBox1 = QtWidgets.QVBoxLayout()
+        vBox2 = QtWidgets.QVBoxLayout()
+
         #creates an element that adds space to the top
-        vBox.addStretch(1)
-
-        #adds the titleLabel
-        vBox.addWidget(labelTitle)
-
-        #add space between the title and the buttons
-        vBox.addStretch(1)
+        vBox1.addStretch(1)
+        vBox2.addStretch(1)
 
         #adds the buttons to the layout
-        vBox.addWidget(button1)
-        vBox.addWidget(button2)
-        vBox.addWidget(button3)
-        vBox.addWidget(button4)
+        vBox1.addWidget(button1)
+        vBox1.addWidget(button2)
+        vBox2.addWidget(button3)
+        vBox2.addWidget(button4)
 
         #creates an element that adds space to the bottom
-        vBox.addStretch(1)
+        vBox1.addStretch(1)
+        vBox2.addStretch(1)
 
         #creates a layout vertically centered
         hBox=QtWidgets.QHBoxLayout()
         #creates an element that adds space to the left
         hBox.addStretch(1)
         #adds the layout with the buttons
-        hBox.addLayout(vBox)
+        hBox.addLayout(vBox1)
+        hBox.addLayout(vBox2)
         #creates an element that adds space to the right
         hBox.addStretch(1)
 
@@ -139,10 +135,6 @@ class MainWindow(QtWidgets.QWidget):
         self.setLayout(hBox)
 
         #setting styles
-
-        #title alignment Centered
-        labelTitle.setAlignment(QtCore.Qt.AlignCenter)
-
         button1.setStyleSheet(style.stylesheetQPushButton)
         button2.setStyleSheet(style.stylesheetQPushButton)
         button3.setStyleSheet(style.stylesheetQPushButton)
