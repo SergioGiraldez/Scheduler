@@ -5,11 +5,11 @@ import time
 from datetime import datetime
 
 class Info:
-	def __init__(self, availableHours, tasks, firstDate, totalDificulty):
-		self.availableHours = availableHours
+	def __init__(self, available_hours, tasks, first_date, total_dificulty):
+		self.available_hours = availableHours
 		self.tasks = tasks
-		self.firstDate = firstDate
-		self.totalDificulty = totalDificulty
+		self.first_date = firstDate
+		self.total_dificulty = totalDificulty
 
 """ Class that contais every task info and the priority calculus method."""
 class Task:
@@ -18,22 +18,21 @@ class Task:
 		self.dificulty = dificulty
 		#date = dd-mm-yyyy TODO: ADD HOUR
 		self.date = date
-		self.posibleHours = 0
-		self.neededHours = 0
+		self.posible_dedication_hours = 0
+		self.needed_dedication_hours = 0
 		#less priority bigger value
 		self.priority = 0
 
-	""" Calculus of the priority, posibleHours and neededHours """
-	def calcPriority(self,availableHours, firstDate, totalDificulty):
-		self.posibleHours = (getTimeToDate(self.getDateInSeconds()) * (availableHours/24))
-		self.neededHours = (getTimeToDate(firstDate) * (int(availableHours)/24) * (int(self.dificulty)/int(totalDificulty)))
-		self.priority = self.posibleHours - self.neededHours
+	def calculate_priority(self,availableHours, firstDate, totalDificulty):
+		self.posible_dedication_hours = (getTimeToDate(self.getDateInSeconds()) * (availableHours/24))
+		self.needed_dedication_hours = (getTimeToDate(firstDate) * (int(availableHours)/24) * (int(self.dificulty)/int(totalDificulty)))
+		self.priority = self.posible_dedication_hours - self.needed_dedication_hours
 
-	def getDateInSeconds(self):
+	def get_date_in_seconds(self):
 		t = datetime(int(self.date[6:]), int(self.date[3:5]), int(self.date[0:2]))
 		return int(round(t.timestamp()))
 
 """ Returns the time between now and the date parameter in seconds.
 	format of date: seconds """
-def getTimeToDate(dateInSeconds):
+def get_time_to_date_in_seconds(dateInSeconds):
 	return (int(dateInSeconds) - int(round(datetime.now().timestamp())))

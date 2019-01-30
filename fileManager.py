@@ -4,44 +4,38 @@
 import time, os, classContainer
 from datetime import datetime
 
+def read_tasks_from_file(file_name):
+	my_tasks = []
+	available_hours = 0
+	first_date = int(round(datetime(2025,11,20).timestamp()))
+	total_dificulty = 0
 
-""" reads the file cointaining all the tasks to do and the hours available per day
-	and returns an object with all the data.
-	default file name: tasks.txt
-"""
-def readScheduleFile(fileName = "tasks.txt"):
-	myTasks = []
-	availableHours = 0
-	firstDate = int(round(datetime(2025,11,20).timestamp()))
-	totalDificulty = 0
-
-	if os.path.isfile(fileName):
+	if os.path.isfile(file_name):
 		try:
-			#reads a text file
-			f = open(fileName, "rt")
+			file = open(fileName, "rt")
 			try:
-				#FIXME: PROBAR SI OPEN DEVUELVE ARRAY DE LINES
-
-				#first file line is hours available per day
-				availableHours = int(f.readline())
-
-				#fills the tasks structure from file
-				for x in f:
-					taskParams = x.split("/")
-			 		#param1: name param2: dificulty param3: date
-					task = classContainer.Task(taskParams[0],taskParams[1],taskParams[2])
-					myTasks.append(task)
-					totalDificulty += int(task.dificulty)
-					if task.getDateInSeconds() < firstDate:
-						firstDate = task.getDateInSeconds()
-
-				return classContainer.Info(availableHours, myTasks, firstDate, totalDificulty)
-
+				read_file_content(file)
 			finally:
 				f.close()
 		except IOError:
 			print("Something went wrong when writing file: " + fileName)
 			return None
+
+def read_file_content(file):
+		available_hours = int(f.readline())
+
+		#fills the tasks structure from file
+		for x in f:
+			taskParams = x.split("/")
+			#param1: name param2: dificulty param3: date
+			task = classContainer.Task(taskParams[0],taskParams[1],taskParams[2])
+			myTasks.append(task)
+			totalDificulty += int(task.dificulty)
+			if task.getDateInSeconds() < firstDate:
+				firstDate = task.getDateInSeconds()
+
+		return classContainer.Info(availableHours, myTasks, firstDate, totalDificulty)
+
 
 
 """ creates a file with the info given.
