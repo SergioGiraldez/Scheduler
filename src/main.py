@@ -92,6 +92,7 @@ class Controller:
 
 
 def main():
+    #TODO: start loginController.start_view()
     app = QtWidgets.QApplication(sys.argv)
     controller = Controller()
     controller.show_login()

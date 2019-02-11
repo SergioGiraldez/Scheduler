@@ -1,13 +1,25 @@
 import os, task
 
+def read_users_registered_file():
+	with open(".resources/users.txt", "rt") as file:
+		users_from_file = get_user_names_and_passwords(file)
+		return users_from_file
 
-def read_file(file_name):
+#----------------------------------------------------------------------------------------
+def get_user_names_and_passwords(file):
+	users = []
+	for user_line in file:
+		users.append(user_line)
+	return users
+
+#----------------------------------------------------------------------------------------
+def read_schedule_file(file_name):
 	with open(file_name, "rt") as file:
-		file_content = read_file_content(file)
+		file_content = read_content_from_schedule_file(file)
 		return file_content
 
 #----------------------------------------------------------------------------------------
-def read_content_from_file(file):
+def read_content_from_schedule_file(file):
 	available_hours = int(file.readline())
 	tasks = read_tasks_from_file(file)
 	first_date = get_first_date()
