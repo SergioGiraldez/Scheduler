@@ -1,8 +1,9 @@
 from src.controller import mainController
 from src.model import fileReader
-from view import View
+from src.view import view
+from src import style
 
-class MainWindow(View):
+class MainWindow(view.View):
 
     def __init__(self):
         super().__init__(self,"Scheduler - Main Panel")
@@ -30,8 +31,17 @@ class MainWindow(View):
 #----------------------------------------------------------------------------------------
     def __fill_scroll_panel():
         categories = fileReader.get_categories()
+        y,x = 0
+        add_category_button = self.__create_button(icon = QtGui.QIcon("add.jpg"),"New category",self.add_category,style.stylesheetQPushButton)
+        self.grid_layout_panel.addWidget(add_category_button),x,y)
         for category in categories:
-             #TODO: add categories to grid
+            #TODO: create button with category data
+            self.grid_layout_panel.addWidget(self.__create_button(),x,y)
+            if x == 2:
+                x = 0
+                y += 1
+            else:
+                x += 1
 #----------------------------------------------------------------------------------------
     def __add_elements_to_vertical_distribution(vertical_block):
         vertical_block.addStretch(1)
@@ -47,3 +57,8 @@ class MainWindow(View):
         horizontal_block.addStretch(1)
         horizontal_block.addLayout(vertical_block)
         horizontal_block.addStretch(1)
+
+#----------------------------------------------------------------------------------------
+    def add_category():
+        pass
+        #TODO: call controller

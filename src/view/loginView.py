@@ -1,7 +1,8 @@
 from src.controller import loginController
-from view import View
+from src.view import view
+from src import style
 
-class LoginWindow(View):
+class LoginWindow(view.View):
 
     switch_window = QtCore.pyqtSignal()
 

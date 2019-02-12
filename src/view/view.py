@@ -1,3 +1,5 @@
+from src import style
+
 class View(QtWidgets.QWidget):
 
     def __init__(self,window_title):
@@ -21,8 +23,8 @@ class View(QtWidgets.QWidget):
         return edit_text
 
 #----------------------------------------------------------------------------------------
-    def __create_button(button_name, function_name, button_style):
-        button = QtWidgets.QPushButton(button_name, self)
+    def __create_button(icon = None, button_name, function_name, button_style):
+        button = QtWidgets.QPushButton(icon, button_name, self)
         button.setStyleSheet(button_style)
         button.clicked.connect(function_name)
         return button
