@@ -1,13 +1,16 @@
-class MainWindow(QtWidgets.QWidget):
+from view import View
+
+class MainWindow(View):
 
     def __init__(self):
-        QtWidgets.QWidget.__init__(self)
-        self.setWindowTitle("TITLE")
+        super().__init__(self,"Scheduler - Main Panel")
+        self.title_label = None
         self.setFixedSize(240, 320)
-        self.initUI()
-    
-    def initUI(self):
+        self.__init_ui()
 
+    def __init_ui(self):
+
+        self.__create_ui_elements()
         #Buttons declaration
         button1 = QtWidgets.QPushButton(QtGui.QIcon("add.svg"), 'New Category', self)
         button2 = QtWidgets.QPushButton(QtGui.QIcon("file.png"), 'Manager', self)
@@ -62,6 +65,14 @@ class MainWindow(QtWidgets.QWidget):
 
         #sets the window title
         self.setWindowTitle("Scheduler")
+
+    def __create_ui_elements():
+        self.title_label = self.__create_title('SCHEDULER')
+        self.scroll_area = self.__create_scroll_area()
+
+    def __create_scroll_area_elements():
+        
+
 
     def handleButton1(self):
         menuManager.mainMenuRedirectTo(1)
